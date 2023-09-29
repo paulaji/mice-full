@@ -1,0 +1,788 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.101.0">
+    <title>Mice Events International</title>
+    <link rel="stylesheet" href="./fonts/font_stylesheet.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="./bootstrap-5.2.0/scss/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/mobilenew.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+    <style>
+        .span3 {
+
+            will-change: transform;
+        }
+    </style>
+
+<body>
+    <div class="fluid_div">
+        <div class="container-fluid">
+            <div class="row">
+         
+                <div class="col-md-12 col-xs-12">
+
+                    <div class="sidebar_wrap">
+                        <div class="side-menu">
+							<nav class="navbar navbar-expand-lg bg-light">
+								<div class="container-fluid">
+									<a class="navbar-brand lang_ar" href="#">Arabic</a>
+									<button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+										<i class="bi bi-text-left"></i>
+									</button> 
+								</div>      
+							</nav>
+						</div>
+                    </div>
+                    
+                    <div id="content">
+                        <section id="Home" class=" section">
+                            <div class="row">
+                                <div class="col-xxl-12 header_wrap">
+                                    <div class="header">
+                                        <a href="en.php">English</a>
+                                        <a href="#">Arabic</a>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-12">
+                                    <h1>
+                                        <img style="height: 80vh;" src="./images/Logo.gif">
+                                    </h1>
+                                </div>
+                            </div>
+                        </section>
+
+                        
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+
+    <script src="./bootstrap-5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+    <script src="./js/script_accordian.js"></script>
+    <script>
+        // mobile functions
+        const buttons = document.querySelectorAll('button.services_button');
+        buttons.forEach((button, index) => {
+            const content = button.nextElementSibling;
+
+            button.addEventListener('click', () => {
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                button.setAttribute('aria-expanded', !isExpanded);
+                content.hidden = isExpanded;
+            });
+        });
+    </script>
+
+    <!--gsap script important-->
+    <script>
+
+        //Help 
+        //1.https://greensock.com/docs/v3/Plugins/ScrollTrigger
+        //2.https://codepen.io/zenu/pen/bGQZeov
+        //3.https://codepen.io/DeCodeUI/pen/xxdLVaY
+        //4.https://codepen.io/akapowl/pen/GRvpxPR/480c18e83b89b5f810796e405201b24e showing all section
+        //4.https://codepen.io/akapowl/pen/RwKxwjw/b9daa75b85b6e77a57bcabde4195a076 //Nav click
+
+
+
+        //Horizontal "containerAnimation" - ScrollTrigger
+
+        gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
+        
+
+
+        //Desktop
+        ScrollTrigger.matchMedia({
+            "(min-width: 991px)": () => {
+
+                let sections = gsap.utils.toArray(".panel");
+                let maxWidth = 0;
+              
+               
+                const getMaxWidth = () => {
+                    maxWidth = 0;
+                    sections.forEach((section) => {
+                        maxWidth += section.offsetWidth;
+                        maxWidth += gsap.getProperty(section, 'marginLeft');
+                    });
+                    maxWidth += 20 * 2;
+                    return maxWidth;
+                };
+
+                getMaxWidth();
+
+
+
+                let scrollTween = gsap.to(sections, {
+                    //xPercent: -100 * (sections.length - 1),
+                    
+                    x: () => `-${maxWidth - window.innerWidth}`,
+                    ease: "none", // <-- IMPORTANT!
+                    scrollTrigger: {
+                        trigger: "#hscroll",
+                        smooth: true,
+                        pin: true,
+                        scrub: 1.8,
+                        snap: 0,
+                        end: () => `+=${maxWidth}`
+
+                    }
+                    
+                });
+
+                
+
+
+
+                /* Main navigation */
+                let panelsSection = document.querySelector("#content"),
+                    panelsContainer = document.querySelector("#hscroll");
+                //scrollTween;
+                document.querySelectorAll(".nav-item").forEach(link => {
+                    link.addEventListener("click", function (e) {
+                        var menu_toggle = document.querySelectorAll('.nav-link');
+                        for (i = 0; i < menu_toggle.length; i++){
+                            menu_toggle[i].classList.remove('active');
+                            // querySelectorAll return an array of dom elements, u can access them directly.
+                        }
+                        link.querySelector('a').classList.add("active");
+                        e.preventDefault();
+                        let targetElem = document.querySelector(e.target.getAttribute("href")),
+                            y = targetElem;
+                        console.log(e.target.getAttribute("href"));
+                        if (targetElem && panelsContainer.isSameNode(targetElem.parentElement)) {
+                            let totalScroll = scrollTween.scrollTrigger.end - scrollTween.scrollTrigger.start,
+                                totalMovement = (sections.length - 1) * targetElem.offsetWidth;
+                            y = Math.round(scrollTween.scrollTrigger.start + (targetElem.offsetLeft / totalMovement) * totalScroll);
+                        }
+                        gsap.to(window, {
+                            scrollTo: {
+                                y: y,
+                                autoKill: false,
+                                scrub: 1,
+                            },
+                            duration:   0
+                        });
+                    });
+                });
+
+
+                gsap.set(".line1", { x: 100 });
+                gsap.set(".line2", { x: 100 });
+                gsap.set(".line3", { x: 100 });
+                gsap.set(".line4", { x: 100 });
+                gsap.to(".line1", {
+                    x: -100,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".line1",
+                        containerAnimation: scrollTween,
+                        start: "left 10%",
+                        end: "right 90%",
+                        scrub: 1.5,
+                        id: "ln1",
+                        snap: {
+                            snapTo: "labels", // snap to the closest label in the timeline
+                            duration: {min: 0.2, max: 8}, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
+                            delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
+                            // ease: "power1.inOut" // the ease of the snap animation ("power3" by default)
+                            ease: "power1.inOut" // the ease of the snap animation ("power3" by default) //power1.inOut
+                        }
+                    }
+                });
+                gsap.to(".line2", {
+                    x: -100,
+
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".line2",
+                        containerAnimation: scrollTween,
+                        start: "left 10%",
+                        end: "right 90%",
+                        scrub: 1.5,
+                        id: "ln2",
+                        snap: {
+                            snapTo: "labels", // snap to the closest label in the timeline
+                            duration: {min: 0.2, max: 8}, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
+                            delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
+                            // ease: "power1.inOut" // the ease of the snap animation ("power3" by default)
+                            ease: "power1.inOut" // the ease of the snap animation ("power3" by default) //power1.inOut
+                        }
+                    }
+                });
+                gsap.to(".line3", {
+                    x: -100,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".line3",
+                        containerAnimation: scrollTween,
+                        start: "left 80%",
+                        end: "right 20%",
+
+                        scrub: .40,
+
+                        id: "ln3",
+                    }
+                });
+                gsap.to(".line4", {
+                    x: -100,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".line4",
+                        containerAnimation: scrollTween,
+                        start: "left 80%",
+                        end: "right 20%",
+                        scrub: .50,
+                        id: "ln4",
+                    }
+                });
+
+                
+                // gsap.set(".line12", { x: 200 });
+                // gsap.set(".line13", { x: 100 });
+                // gsap.set(".line14", { x: 400 });
+
+                gsap.to(".line12", {
+                    x: -150,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".line12",
+                        containerAnimation: scrollTween,
+                        start: "left 20%",
+                        end: "right 100%",
+                        scrub: 2.50,
+                        id: "ln4",
+                        snap: {
+                        // snapTo: "labels", // snap to the closest label in the timeline
+                        duration: {min: 0.2, max: 3}, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
+                        delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
+                        ease: "power1.inOut" // the ease of the snap animation ("power3" by default)
+                    }
+                    }
+                });
+
+                gsap.to(".line13", {
+                    x: -200,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .line13",
+                        containerAnimation: scrollTween,
+                        start: "left 10%",
+                        end: "right 80%",
+                        scrub: 2,
+                        id: "ln4",
+                    }
+                });
+
+                gsap.to(".line14", {
+                    x: -200,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .line14",
+                        containerAnimation: scrollTween,
+                        start: "left 20%",
+                        end: "right 80%",
+                        scrub: 2.5,
+                        id: "ln4",
+                    }
+                });
+
+                gsap.to(".line15", {
+                    x: -200,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".line15",
+                        containerAnimation: scrollTween,
+                        start: "left 20%",
+                        end: "right 90%",
+                        scrub: 2.5,
+                        id: "ln4",
+                        snap: {
+                        // snapTo: "labels", // snap to the closest label in the timeline
+                        duration: {min: 0.2, max: 3}, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
+                        delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
+                        ease: "power1.inOut" // the ease of the snap animation ("power3" by default)
+                        }
+                    }
+                });
+
+                gsap.to(".line16", {
+                    x: -200,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .line16",
+                        containerAnimation: scrollTween,
+                        start: "left 10%",
+                        end: "right 80%",
+                        scrub: 2,
+                        id: "ln4",
+                    }
+                });
+
+                gsap.to(".line17", {
+                    x: -200,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .line17",
+                        containerAnimation: scrollTween,
+                        start: "left 20%",
+                        end: "right 80%",
+                        scrub: 2.5,
+                        id: "ln4",
+                    }
+                });
+
+                gsap.to(".line18", {
+                    x: -300,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".line18",
+                        containerAnimation: scrollTween,
+                        start: "left 20%",
+                        end: "right 90%",
+                        scrub: 2.5,
+                        id: "ln4",
+                        snap: {
+                        // snapTo: "labels", // snap to the closest label in the timeline
+                        duration: {min: 0.2, max: 3}, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
+                        delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
+                        ease: "power1.inOut" // the ease of the snap animation ("power3" by default)
+                        }
+                    }
+                });
+
+                gsap.to(".line19", {
+                    x: 100,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .line19",
+                        containerAnimation: scrollTween,
+                        start: "left 10%",
+                        end: "right 80%",
+                        scrub: 2.5,
+                        id: "ln4",
+                    }
+                });
+
+                gsap.to(".line20", {
+                    x: 300,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .line20",
+                        containerAnimation: scrollTween,
+                        start: "left 20%",
+                        end: "right 80%",
+                        scrub: 2.5,
+                        id: "ln4",
+                    }
+                });
+
+                gsap.to(".span1", {
+                    yPercent: 100,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .span1",
+                        containerAnimation: scrollTween,
+                        start: "center 80%",
+                        //end: "center 20%",
+                        scrub: 2,
+                        id: "1"
+                    }
+                });
+                gsap.to(".span2", {
+                    yPercent: 100,
+
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .span2",
+                        containerAnimation: scrollTween,
+                        start: "center 80%",
+                        //end: "center 20%",
+                        scrub: 2,
+                        id: "2"
+                    }
+                });
+                gsap.to(".span3", {
+                    yPercent: 100,
+
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .span3",
+                        containerAnimation: scrollTween,
+                        start: "center 80%",
+                        //end: "center 20%",
+                        scrub: 2,
+                        id: "3"
+                    }
+                });
+                gsap.to(".span4", {
+                    yPercent: 100,
+
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .span4",
+                        containerAnimation: scrollTween,
+                        start: "center 80%",
+                        //end: "center 20%",
+                        scrub: 2.5,
+                        id: "3"
+                    }
+                });
+                
+                ScrollTrigger.create({
+                    trigger: ".panel2",
+                    containerAnimation: scrollTween,
+                    start: "center 65%",
+                    end: "center 51%",
+                    onEnterBack: () => console.log("enterBack"),
+                    onLeaveBack: () => console.log("leaveBack"),
+                    onToggle: self => console.log("active", self.isActive),
+                    id: "66"
+                });
+
+                
+
+                ScrollTrigger.create({
+                    trigger: ".panel7",
+                    containerAnimation: scrollTween,
+                    start: "center 65%",
+                    end: "center 51%",
+                    onEnter: () => console.log("enter"),
+                    onLeave: () => console.log("leave"),
+                    onEnterBack: () => console.log("enterBack"),
+                    onLeaveBack: () => console.log("leaveBack"),
+                    onToggle: self => console.log("active", self.isActive),
+                    id: "66"
+                });
+                
+
+                
+
+
+                ScrollTrigger.create({
+                    yPercent: -100,
+                    ease: ":Power4.easeOut",
+                    trigger: "#home",
+                    start: "top top ",
+                    scrub: 2,
+                  
+                    //opacity: 0,
+                    pinSpacing: false,
+                    //onEnter: () => console.log("enter"),
+                    pin: true,
+
+                })
+                
+
+                ScrollTrigger.defaults({ markers: { startColor: "black", endColor: "black" } });
+                // only show the relevant section's markers at any given time
+                gsap.set(".gsap-marker-start, .gsap-marker-end, .gsap-marker-scroller-start, .gsap-marker-scroller-end", { autoAlpha: 0 });
+
+                ["panel2", "panel3", "panel4", "panel5", "panel6", "panel7", "panel8", "panel9", "panel10"].forEach((triggerClass, i) => {
+
+                    ScrollTrigger.create({
+                        trigger: '.' + triggerClass,
+                        containerAnimation: scrollTween,
+                        start: "left 30%",
+                        end: i === 7 ? "right right" : "right 30%",
+                        markers: false,
+                        //onToggle: self => gsap.to(".marker-" + (i + 1), { duration: 0.25, autoAlpha: self.isActive ? 1 : 0 })
+                    });
+                });
+                
+
+
+            }
+        })
+
+        
+
+       /* ScrollTrigger.matchMedia({
+            
+            "(min-width: 990px)": () => {
+                
+                
+                let sections = gsap.utils.toArray(".panel");
+                let maxWidth = 0;
+
+                const getMaxWidth = () => {
+                    maxWidth = 0;
+                    sections.forEach((section) => {
+                        maxWidth += section.offsetWidth;
+                        maxWidth += gsap.getProperty(section, 'marginLeft');
+                    });
+                    maxWidth += 20 * 2;
+                    return maxWidth;
+                };
+
+                getMaxWidth();
+
+
+
+                let scrollTween = gsap.to(sections, {
+                    //xPercent: -100 * (sections.length - 1),
+                    x: () => `-${maxWidth - window.innerWidth}`,
+                    ease: "none", // <-- IMPORTANT!
+                    scrollTrigger: {
+                        trigger: "#hscroll",
+                        pin: true,
+                        scrub: 0.8,
+                        snap: 0,
+                        end: () => `+=${maxWidth}`
+
+                    }
+                });
+
+                
+                gsap.set(".line1", { x: 100 });
+                gsap.set(".line2", { x: 300 });
+                gsap.set(".line3", { x: 200 });
+                gsap.set(".line4", { x: 400 });
+                gsap.to(".line1", {
+                    x: -100,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .line1",
+                        containerAnimation: scrollTween,
+                        start: "left 10%",
+                        end: "right 90%",
+                        scrub: 1.5,
+                        id: "ln1",
+                        snap: {
+                            snapTo: "labels", // snap to the closest label in the timeline
+                            duration: {min: 0.2, max: 5}, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
+                            delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
+                            // ease: "power1.inOut" // the ease of the snap animation ("power3" by default)
+                            ease: "power1.inOut" // the ease of the snap animation ("power3" by default) //power1.inOut
+                        }
+                    }
+                });
+                gsap.to(".line2", {
+                    x: -100,
+
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .line2",
+                        containerAnimation: scrollTween,
+                        start: "left 80%",
+                        end: "right 20%",
+                        scrub: .30,
+                        id: "ln2",
+                    }
+                });
+                gsap.to(".line3", {
+                    x: -100,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .line3",
+                        containerAnimation: scrollTween,
+                        start: "left 80%",
+                        end: "right 20%",
+
+                        scrub: .40,
+
+                        id: "ln3",
+                    }
+                });
+                gsap.to(".line4", {
+                    x: -100,
+                    //backgroundColor: "#1e90ff",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: " .line4",
+                        containerAnimation: scrollTween,
+                        start: "left 80%",
+                        end: "right 20%",
+                        scrub: .50,
+                        id: "ln4",
+                    }
+                });
+
+            }
+            
+        })
+    */
+
+        //Mobile
+         //Help 
+        //1.https://codepen.io/GreenSock/pen/KKpLdWW
+        /* ScrollTrigger.matchMedia({
+            "(max-width: 991px)": () => {
+
+
+                let panels = gsap.utils.toArray(".panel");
+                let tops = panels.map(panel => ScrollTrigger.create({ trigger: panel, start: "top top" }));
+
+                panels.forEach((panel, i) => {
+                    ScrollTrigger.create({
+                        trigger: panel,
+                        start: () => panel.offsetHeight < window.innerHeight ? "top top" : "bottom bottom", 
+                        pin: true,
+                        pinSpacing: false,
+                        markers: false,
+                    });
+                });
+
+                ScrollTrigger.create({
+                    snap: {
+                        snapTo: (progress, self) => {
+                            let panelStarts = tops.map(st => st.start), 
+                                snapScroll = gsap.utils.snap(panelStarts, self.scroll()); 
+                            return gsap.utils.normalize(0, ScrollTrigger.maxScroll(window), snapScroll); 
+                        },
+                        duration: 0.5
+                    }
+                });
+
+            }
+        }) */
+
+
+    </script>
+    <script>
+        function animateFrom(elem, direction) {
+            direction = direction || 1;
+            var x = 0,
+                y = direction * 100;
+            if(elem.classList.contains("gs_reveal_fromLeft")) {
+                x = -100;
+                y = 0;
+            } else if (elem.classList.contains("gs_reveal_fromRight")) {
+                x = 100;
+                y = 0;
+            }
+            elem.style.transform = "translate(" + x + "px, " + y + "px)";
+            elem.style.opacity = "0";
+            gsap.fromTo(elem, {x: x, y: y, autoAlpha: 0}, {
+                duration: 3.25, 
+                x: 0,
+                y: 0, 
+                autoAlpha: 3, 
+                ease: "expo", 
+                overwrite: "auto"
+            });
+            }
+
+            function hide(elem) {
+            gsap.set(elem, {autoAlpha: 0});
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+            gsap.registerPlugin(ScrollTrigger);
+            
+            gsap.utils.toArray(".gs_reveal").forEach(function(elem) {
+                hide(elem); // assure that the element is hidden when scrolled into view
+                
+                ScrollTrigger.create({
+                trigger: elem,
+                markers: false,
+                onEnter: function() { animateFrom(elem) }, 
+                onEnterBack: function() { animateFrom(elem, -1) },
+                onLeave: function() { hide(elem) } // assure that the element is hidden when scrolled into view
+                });
+            });
+        });
+    </script>
+    <script>
+        // CURSOR
+        var cursor = $(".cursor"),
+        follower = $(".cursor-follower");
+
+        var posX = 0,
+            posY = 0;
+
+        var mouseX = 0,
+            mouseY = 0;
+
+        TweenMax.to({}, 0.016, {
+        repeat: -1,
+        onRepeat: function() {
+            posX += (mouseX - posX) / 9;
+            posY += (mouseY - posY) / 9;
+
+            TweenMax.set(follower, {
+                css: {
+                left: posX - 12,
+                top: posY - 12
+                }
+            });
+
+            TweenMax.set(cursor, {
+                css: {
+                left: mouseX,
+                top: mouseY
+                }
+            });
+        }
+        });
+
+        $(document).on("mousemove", function(e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        // yellow circle
+        $(".link").on("mouseenter", function() {
+            cursor.addClass("active");
+            follower.addClass("active");
+        });
+        $(".link").on("mouseleave", function() {
+            cursor.removeClass("active");
+            follower.removeClass("active");
+        });
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+<script>
+    $('[data-fancybox="gallery"]').fancybox({
+    buttons: [
+        "slideShow",
+        "thumbs",
+        "zoom",
+        "fullScreen",
+        "share",
+        "close"
+    ],
+    loop: false,
+    protect: true
+    });
+</script>    
+
+</body>
+
+
+
+</html>
